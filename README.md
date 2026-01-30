@@ -1,17 +1,17 @@
-# 🎓 IIT KGP Internship Agent
+#  IIT KGP Internship Agent
 
 An AI-powered multi-agent pipeline that automates personalized research internship outreach for IIT Kharagpur students.
 
-## ✨ Features
+##  Features
 
-- **📄 CV Parsing**: Extracts skills, projects, interests from PDF/DOCX CVs using GPT-4o
-- **🔍 Faculty Scraping**: Scrapes 188+ faculty profiles from IIT KGP website with real emails
-- **🧠 Intelligent Matching**: Auto-selects relevant departments (CS, EC, EE) based on your CV
-- **🌐 Research Enrichment**: Uses Serper API to find professor publications & research areas
-- **✉️ Personalized Emails**: Generates tailored outreach emails with match scores (0.0-1.0)
-- **📝 Cover Letters**: Creates professional cover letters for each professor
+- ** CV Parsing**: Extracts skills, projects, interests from PDF/DOCX CVs using GPT-4o
+- ** Faculty Scraping**: Scrapes 188+ faculty profiles from IIT KGP website with real emails
+- ** Intelligent Matching**: Auto-selects relevant departments (CS, EC, EE) based on your CV
+- ** Research Enrichment**: Uses Serper API to find professor publications & research areas
+- ** Personalized Emails**: Generates tailored outreach emails with match scores (0.0-1.0)
+- ** Cover Letters**: Creates professional cover letters for each professor
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -38,7 +38,7 @@ An AI-powered multi-agent pipeline that automates personalized research internsh
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Clone & Install
 
@@ -73,7 +73,7 @@ python -m src.main --cv your_cv.pdf --departments "Computer Science" --limit 20
 python -m src.main --cv your_cv.pdf --limit 15 --min-score 0.3
 ```
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 devsoc/
@@ -116,17 +116,17 @@ devsoc/
 └── ARCHITECTURE.md             # Detailed architecture docs
 ```
 
-## 🔧 Configuration
+##  Configuration
 
 | Environment Variable | Description | Required |
 |---------------------|-------------|----------|
-| `OPENAI_API_KEY` | OpenAI API key for GPT-4o | ✅ Yes |
-| `SERPER_API_KEY` | Serper.dev API key (free tier) | ✅ Yes |
-| `SCRAPER_DELAY` | Delay between requests (default: 2.0s) | ❌ No |
-| `LLM_MODEL` | OpenAI model (default: gpt-4o) | ❌ No |
-| `LOG_LEVEL` | Logging level (default: INFO) | ❌ No |
+| `OPENAI_API_KEY` | OpenAI API key for GPT-4o |  Yes |
+| `SERPER_API_KEY` | Serper.dev API key (free tier) |  Yes |
+| `SCRAPER_DELAY` | Delay between requests (default: 2.0s) |  No |
+| `LLM_MODEL` | OpenAI model (default: gpt-4o) |  No |
+| `LOG_LEVEL` | Logging level (default: INFO) |  No |
 
-## 📊 Sample Output
+##  Sample Output
 
 ```json
 {
@@ -140,7 +140,7 @@ devsoc/
 }
 ```
 
-## 🤖 How It Works
+##  How It Works
 
 ### 1. CV Parsing
 - Extracts text from PDF/DOCX using PyMuPDF/python-docx
@@ -164,7 +164,7 @@ devsoc/
   - Student's relevant projects
   - Common interests/technologies
 
-## 📈 Performance
+##  Performance
 
 | Metric | Value |
 |--------|-------|
@@ -174,7 +174,7 @@ devsoc/
 | Email generation | ~15s per email |
 | Avg match score | 0.55 - 0.70 |
 
-## 🛠️ Development
+##  Development
 
 ```bash
 # Run tests
@@ -187,11 +187,11 @@ black src/
 mypy src/
 ```
 
-## 📄 License
+##  License
 
 MIT License - Built for DevSoC IIT Kharagpur
 
-## 🙏 Credits
+##  Credits
 
 - **LangGraph** - Agent orchestration framework
 - **Playwright** - Web scraping
