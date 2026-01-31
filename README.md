@@ -187,7 +187,33 @@ black src/
 mypy src/
 ```
 
-##  License
+## 🤝 Contributing
+
+
+
+We welcome contributions! We have prepared a detailed roadmap of standalone features that are ready to be built. Whether you are a beginner or an expert, there is something for you.
+
+
+
+👉 **[Check out the Community Roadmap & Contribution Guide](COMMUNITY_ROADMAP.md)**
+
+
+
+### Quick Start for Contributors
+
+1. Fork the repository
+
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+
+4. Push to the branch (`git push origin feature/amazing-feature`)
+
+5. Open a Pull Request
+
+
+
+## License
 
 MIT License - Built for DevSoC IIT Kharagpur
 
