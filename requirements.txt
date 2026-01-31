@@ -1,8 +1,8 @@
 # Core
 langchain>=0.3.0
 langgraph>=0.2.0
-langchain-openai>=0.2.0
-openai>=1.0.0
+langchain-google-genai>=2.0.0
+google-generativeai>=0.8.0
 pydantic>=2.0.0
 pydantic-settings>=2.0.0
 

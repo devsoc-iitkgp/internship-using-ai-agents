@@ -4,7 +4,7 @@ An AI-powered multi-agent pipeline that automates personalized research internsh
 
 ##  Features
 
-- ** CV Parsing**: Extracts skills, projects, interests from PDF/DOCX CVs using GPT-4o
+- ** CV Parsing**: Extracts skills, projects, interests from PDF/DOCX CVs using Gemini
 - ** Faculty Scraping**: Scrapes 188+ faculty profiles from IIT KGP website with real emails
 - ** Intelligent Matching**: Auto-selects relevant departments (CS, EC, EE) based on your CV
 - ** Research Enrichment**: Uses Serper API to find professor publications & research areas
@@ -20,7 +20,7 @@ An AI-powered multi-agent pipeline that automates personalized research internsh
 │                                                                       │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐   │
 │  │   Parse CV   │───►│ Recommend    │───►│   Scrape Faculty     │   │
-│  │   (GPT-4o)   │    │ Departments  │    │   (Playwright)       │   │
+│  │   (Gemini)  │    │ Departments  │    │   (Playwright)       │   │
 │  └──────────────┘    └──────────────┘    └──────────┬───────────┘   │
 │                                                      │               │
 │                                                      ▼               │
@@ -32,7 +32,7 @@ An AI-powered multi-agent pipeline that automates personalized research internsh
 │                                          ▼                           │
 │  ┌──────────────────────────────────────────────────────────────┐   │
 │  │               Generate Personalized Emails                    │   │
-│  │                       (GPT-4o)                                │   │
+│  │                       (Gemini)                                │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 │                                                                       │
 └─────────────────────────────────────────────────────────────────────┘
@@ -56,7 +56,7 @@ playwright install chromium
 ```bash
 cp .env.example .env
 # Edit .env with your keys:
-# - OPENAI_API_KEY (required)
+# - GOOGLE_API_KEY (required for Gemini - get from aistudio.google.com)
 # - SERPER_API_KEY (free tier: 2500/month at serper.dev)
 ```
 
@@ -120,10 +120,10 @@ devsoc/
 
 | Environment Variable | Description | Required |
 |---------------------|-------------|----------|
-| `OPENAI_API_KEY` | OpenAI API key for GPT-4o |  Yes |
+| `GOOGLE_API_KEY` | Google API key for Gemini |  Yes |
 | `SERPER_API_KEY` | Serper.dev API key (free tier) |  Yes |
 | `SCRAPER_DELAY` | Delay between requests (default: 2.0s) |  No |
-| `LLM_MODEL` | OpenAI model (default: gpt-4o) |  No |
+| `LLM_MODEL` | Gemini model (default: gemini-1.5-flash) |  No |
 | `LOG_LEVEL` | Logging level (default: INFO) |  No |
 
 ##  Sample Output
@@ -144,7 +144,7 @@ devsoc/
 
 ### 1. CV Parsing
 - Extracts text from PDF/DOCX using PyMuPDF/python-docx
-- GPT-4o structures data into: skills, projects, internships, interests
+- Gemini structures data into: skills, projects, internships, interests
 - Identifies relevant departments based on skills (ML → CS, VLSI → EC)
 
 ### 2. Faculty Scraping
@@ -159,7 +159,7 @@ devsoc/
 
 ### 4. Email Generation
 - Calculates match score based on CV ↔ Professor overlap
-- GPT-4o generates personalized email referencing:
+- Gemini generates personalized email referencing:
   - Specific professor research areas
   - Student's relevant projects
   - Common interests/technologies
@@ -222,4 +222,4 @@ MIT License - Built for DevSoC IIT Kharagpur
 - **LangGraph** - Agent orchestration framework
 - **Playwright** - Web scraping
 - **Serper.dev** - Google Search API
-- **OpenAI** - GPT-4o for NLU/NLG
+- **Google Gemini** - LLM for NLU/NLG

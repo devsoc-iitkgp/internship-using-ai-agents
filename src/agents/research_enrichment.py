@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..tools.search_tool import WebSearchTool
@@ -57,11 +57,25 @@ class ResearchEnrichmentAgent:
     def __init__(self, api_key: Optional[str] = None):
         self.logger = AgentLogger("ResearchEnrichmentAgent")
         self.search_tool = WebSearchTool()
-        self.llm = ChatOpenAI(
+        self.llm = ChatGoogleGenerativeAI(
             model=settings.llm_model,
             temperature=0.2,
-            api_key=api_key or settings.openai_api_key
+            google_api_key=api_key or settings.google_api_key
         )
+    
+    def _get_content_str(self, content) -> str:
+        """Safely extract string from LLM response content.
+        
+        Gemini can return content as a list of parts instead of a string.
+        This helper handles both cases.
+        """
+        if isinstance(content, list):
+            # Join all text parts from the list
+            return "".join(
+                part.get("text", str(part)) if isinstance(part, dict) else str(part)
+                for part in content
+            )
+        return str(content) if content else ""
     
     async def run(
         self,
@@ -174,7 +188,7 @@ class ResearchEnrichmentAgent:
             response = await self.llm.ainvoke(message)
             
             # Parse JSON array from response
-            content = response.content.strip()
+            content = self._get_content_str(response.content).strip()
             if content.startswith("["):
                 keywords = json.loads(content)
                 return keywords if isinstance(keywords, list) else []
