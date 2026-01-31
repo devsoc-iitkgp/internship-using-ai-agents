@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 from typing import List, Optional
 
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..schemas.cv import StudentCV
@@ -155,11 +155,25 @@ class PersonalizationAgent:
     
     def __init__(self, api_key: Optional[str] = None):
         self.logger = AgentLogger("PersonalizationAgent")
-        self.llm = ChatOpenAI(
+        self.llm = ChatGoogleGenerativeAI(
             model=settings.llm_model,
             temperature=settings.llm_temperature,
-            api_key=api_key or settings.openai_api_key
+            google_api_key=api_key or settings.google_api_key
         )
+    
+    def _get_content_str(self, content) -> str:
+        """Safely extract string from LLM response content.
+        
+        Gemini can return content as a list of parts instead of a string.
+        This helper handles both cases.
+        """
+        if isinstance(content, list):
+            # Join all text parts from the list
+            return "".join(
+                part.get("text", str(part)) if isinstance(part, dict) else str(part)
+                for part in content
+            )
+        return str(content) if content else ""
     
     async def run(
         self,
@@ -293,7 +307,7 @@ class PersonalizationAgent:
         
         try:
             response = await self.llm.ainvoke(message)
-            content = response.content.strip()
+            content = self._get_content_str(response.content).strip()
             
             # Handle markdown code blocks
             if "```" in content:
@@ -353,7 +367,7 @@ class PersonalizationAgent:
         
         try:
             response = await self.llm.ainvoke(message)
-            content = response.content.strip()
+            content = self._get_content_str(response.content).strip()
             
             if "```" in content:
                 content = content.split("```")[1]
@@ -412,7 +426,7 @@ class PersonalizationAgent:
         
         try:
             response = await self.llm.ainvoke(message)
-            return response.content.strip()
+            return self._get_content_str(response.content).strip()
             
         except Exception as e:
             self.logger.error(f"Cover letter generation failed: {e}")

@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Optional, Union
 
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..tools.document_parser import DocumentParser
@@ -127,10 +127,10 @@ class CVParserAgent:
     def __init__(self, api_key: Optional[str] = None):
         self.logger = AgentLogger("CVParserAgent")
         self.document_parser = DocumentParser()
-        self.llm = ChatOpenAI(
+        self.llm = ChatGoogleGenerativeAI(
             model=settings.llm_model,
             temperature=0.1,  # Low temperature for accurate extraction
-            api_key=api_key or settings.openai_api_key
+            google_api_key=api_key or settings.google_api_key
         )
     
     async def run(self, file_path: Union[str, Path]) -> StudentCV:
@@ -185,6 +185,20 @@ class CVParserAgent:
         
         return self._validate_and_create(cv_data)
     
+    def _get_content_str(self, content) -> str:
+        """Safely extract string from LLM response content.
+        
+        Gemini can return content as a list of parts instead of a string.
+        This helper handles both cases.
+        """
+        if isinstance(content, list):
+            # Join all text parts from the list
+            return "".join(
+                part.get("text", str(part)) if isinstance(part, dict) else str(part)
+                for part in content
+            )
+        return str(content) if content else ""
+
     async def _extract_cv_data(self, text: str) -> dict:
         """Extract structured data from CV text using LLM."""
         # Truncate very long CVs
@@ -197,7 +211,7 @@ class CVParserAgent:
         
         try:
             response = await self.llm.ainvoke(message)
-            content = response.content.strip()
+            content = self._get_content_str(response.content).strip()
             
             # Handle potential markdown code blocks
             if content.startswith("```"):

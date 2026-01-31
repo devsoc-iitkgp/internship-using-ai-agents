@@ -10,10 +10,10 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
     # API Keys
-    openai_api_key: str = Field(
+    google_api_key: str = Field(
         default="", 
-        alias="OPENAI_API_KEY",
-        description="OpenAI API key for LLM operations"
+        alias="GOOGLE_API_KEY",
+        description="Google API key for Gemini LLM operations"
     )
     serper_api_key: str = Field(
         default="", 
@@ -59,9 +59,9 @@ class Settings(BaseSettings):
     
     # LLM settings
     llm_model: str = Field(
-        default="gpt-4o",
+        default="gemini-1.5-flash",
         alias="LLM_MODEL",
-        description="OpenAI model to use"
+        description="Gemini model to use"
     )
     llm_temperature: float = Field(
         default=0.3,
