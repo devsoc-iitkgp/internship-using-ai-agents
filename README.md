@@ -44,7 +44,7 @@ An AI-powered multi-agent pipeline that automates personalized research internsh
 
 ```bash
 git clone <repo-url>
-cd devsoc
+cd internship-using-ai-agents
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
